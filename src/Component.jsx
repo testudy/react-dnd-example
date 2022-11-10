@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDrag } from "react-dnd";
 import { COMPONENT } from "./constants";
 
@@ -8,9 +8,8 @@ const style = {
   backgroundColor: "white",
   cursor: "move"
 };
-const Component = ({ data, components, path }) => {
-  const ref = useRef(null);
 
+const Component = ({ data, components, path }) => {
   const [{ isDragging }, drag] = useDrag({
     item: { type: COMPONENT, id: data.id, path },
     collect: monitor => ({
@@ -19,13 +18,12 @@ const Component = ({ data, components, path }) => {
   });
 
   const opacity = isDragging ? 0 : 1;
-  drag(ref);
 
   const component = components[data.id];
 
   return (
     <div
-      ref={ref}
+      ref={drag}
       style={{ ...style, opacity }}
       className="component draggable"
     >

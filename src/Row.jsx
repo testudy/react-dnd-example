@@ -6,8 +6,6 @@ import Column from "./Column";
 
 const style = {};
 const Row = ({ data, components, handleDrop, path }) => {
-  const ref = useRef(null);
-
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: ROW,
@@ -21,22 +19,9 @@ const Row = ({ data, components, handleDrop, path }) => {
   });
 
   const opacity = isDragging ? 0 : 1;
-  drag(ref);
-
-  const renderColumn = (column, currentPath) => {
-    return (
-      <Column
-        key={column.id}
-        data={column}
-        components={components}
-        handleDrop={handleDrop}
-        path={currentPath}
-      />
-    );
-  };
 
   return (
-    <div ref={ref} style={{ ...style, opacity }} className="base draggable row">
+    <div ref={drag} style={{ ...style, opacity }} className="base draggable row">
       {data.id}
       <div className="columns">
         {data.children.map((column, index) => {
@@ -52,7 +37,13 @@ const Row = ({ data, components, handleDrop, path }) => {
                 onDrop={handleDrop}
                 className="horizontalDrag"
               />
-              {renderColumn(column, currentPath)}
+              <Column
+                key={column.id}
+                data={column}
+                components={components}
+                handleDrop={handleDrop}
+                path={currentPath}
+              />
             </React.Fragment>
           );
         })}

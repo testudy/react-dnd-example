@@ -6,8 +6,6 @@ import Component from "./Component";
 
 const style = {};
 const Column = ({ data, components, handleDrop, path }) => {
-  const ref = useRef(null);
-
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: COLUMN,
@@ -21,22 +19,10 @@ const Column = ({ data, components, handleDrop, path }) => {
   });
 
   const opacity = isDragging ? 0 : 1;
-  drag(ref);
-
-  const renderComponent = (component, currentPath) => {
-    return (
-      <Component
-        key={component.id}
-        data={component}
-        components={components}
-        path={currentPath}
-      />
-    );
-  };
 
   return (
     <div
-      ref={ref}
+      ref={drag}
       style={{ ...style, opacity }}
       className="base draggable column"
     >
@@ -53,7 +39,12 @@ const Column = ({ data, components, handleDrop, path }) => {
               }}
               onDrop={handleDrop}
             />
-            {renderComponent(component, currentPath)}
+            <Component
+              key={component.id}
+              data={component}
+              components={components}
+              path={currentPath}
+            />
           </React.Fragment>
         );
       })}

@@ -1,8 +1,8 @@
 import React from "react";
-import { useDrag } from "react-dnd";
+import { DragPreviewImage, useDrag } from "react-dnd";
 
 const SideBarItem = ({ data }) => {
-  const [{ opacity }, drag] = useDrag({
+  const [{ opacity }, drag, preview] = useDrag({
     item: data,
     collect: monitor => ({
       opacity: monitor.isDragging() ? 0.4 : 1
@@ -10,9 +10,12 @@ const SideBarItem = ({ data }) => {
   });
   
   return (
-    <div className="sideBarItem" ref={drag} style={{ opacity }}>
-      {data.component.type}
-    </div>
+    <>
+      <DragPreviewImage connect={preview} src="https://www.ekuaibao.com/_nuxt/img/norton.baefffc.png" />
+      <div className="sideBarItem" ref={drag} style={{ opacity }}>
+        {data.component.type}
+      </div>
+    </>
   );
 };
 export default SideBarItem;

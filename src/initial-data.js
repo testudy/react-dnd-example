@@ -46,17 +46,14 @@ const initialData = {
             },
             {
               type: COMPONENT,
-              id: "component0"
-            },
-            {
-              type: COMPONENT,
-              id: "component2"
+              id: "component4"
             }
           ]
         }
       ]
     }
   ],
+
   components: {
     component0: { id: "component0", type: "input", content: "Some input" },
     component1: { id: "component1", type: "image", content: "Some image" },

@@ -16,10 +16,8 @@ import { SIDEBAR_ITEMS, SIDEBAR_ITEM, COMPONENT, COLUMN } from "./constants";
 import shortid from "shortid";
 
 const Container = () => {
-  const initialLayout = initialData.layout;
-  const initialComponents = initialData.components;
-  const [layout, setLayout] = useState(initialLayout);
-  const [components, setComponents] = useState(initialComponents);
+  const [layout, setLayout] = useState(initialData.layout);
+  const [components, setComponents] = useState(initialData.components);
 
   const handleDropToTrashBin = useCallback(
     (dropZone, item) => {
@@ -107,18 +105,6 @@ const Container = () => {
     [layout, components]
   );
 
-  const renderRow = (row, currentPath) => {
-    return (
-      <Row
-        key={row.id}
-        data={row}
-        handleDrop={handleDrop}
-        components={components}
-        path={currentPath}
-      />
-    );
-  };
-
   // dont use index for key when mapping over items
   // causes this issue - https://github.com/react-dnd/react-dnd/issues/342
   return (
@@ -143,7 +129,13 @@ const Container = () => {
                   onDrop={handleDrop}
                   path={currentPath}
                 />
-                {renderRow(row, currentPath)}
+                <Row
+                  key={row.id}
+                  data={row}
+                  handleDrop={handleDrop}
+                  components={components}
+                  path={currentPath}
+                />
               </React.Fragment>
             );
           })}
@@ -158,9 +150,7 @@ const Container = () => {
         </div>
 
         <TrashDropZone
-          data={{
-            layout
-          }}
+          data={{ layout }}
           onDrop={handleDropToTrashBin}
         />
       </div>
