@@ -186,6 +186,12 @@ export const handleMoveToDifferentParent = (
     newLayoutStructure
   );
 
+  // Todo：简单编码，清理空Row
+  updatedLayout = updatedLayout.filter(i =>
+    i.children && i.children.length > 0 && // Column 数量
+    i.children[0].children  && i.children[0].children.length > 0 // 组件数量
+  );
+
   return updatedLayout;
 };
 
